@@ -39,6 +39,9 @@ dependencies:
   #Facebook Sign-In
   flutter_facebook_login: ^2.0.1
 
+  #provider
+  provider: ^4.3.2+3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
