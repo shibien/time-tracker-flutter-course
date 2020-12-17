@@ -18,6 +18,10 @@ abstract class AuthBase {
 
   Future<User> signInAnonymously();
 
+  Future<User> signInWithEmailAndPassword(String email, String password);
+
+  Future<User> createUserWithEmailAndPassword(String email, String password);
+
   Future<User> signInWithGoogle();
 
   Future<User> signInWithFacebook();
@@ -50,6 +54,21 @@ class Auth implements AuthBase {
   @override
   Future<User> signInAnonymously() async {
     final authResult = await _firebaseAuth.signInAnonymously();
+    return _userFromFirebase(authResult.user);
+  }
+
+  @override
+  Future<User> signInWithEmailAndPassword(String email, String password) async {
+    final authResult = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
+    return _userFromFirebase(authResult.user);
+  }
+
+  @override
+  Future<User> createUserWithEmailAndPassword(
+      String email, String password) async {
+    final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
     return _userFromFirebase(authResult.user);
   }
 
@@ -89,13 +108,15 @@ class Auth implements AuthBase {
     );
     if (result.accessToken != null) {
       final authResult = await _firebaseAuth.signInWithCredential(
-        auth.FacebookAuthProvider.credential(result.accessToken.token,),
+        auth.FacebookAuthProvider.credential(
+          result.accessToken.token,
+        ),
       );
       return _userFromFirebase(authResult.user);
     } else {
       throw PlatformException(
-          code: 'ERROR_ABORTED_BY_USER',
-          message: 'Sign in aborted by user',
+        code: 'ERROR_ABORTED_BY_USER',
+        message: 'Sign in aborted by user',
       );
     }
   }
