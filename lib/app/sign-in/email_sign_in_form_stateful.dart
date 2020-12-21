@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:time_tracker_flutter_course/app/sign-in/email_sign_in_model.dart';
 import 'package:time_tracker_flutter_course/app/sign-in/validators.dart';
 import 'package:time_tracker_flutter_course/common_widgets/form_submit_button.dart';
 import 'package:time_tracker_flutter_course/common_widgets/platform_alert_dialog.dart';
@@ -12,24 +13,23 @@ import 'package:time_tracker_flutter_course/services/auth.dart';
 
 
 
-enum EmailSignInFormType { signIn, register }
+// enum EmailSignInFormType { signIn, register }
 
-class EmailSignInForm extends StatefulWidget with EmailAndPasswordValidators {
+class EmailSignInFormStateful extends StatefulWidget with EmailAndPasswordValidators {
   // EmailSignInForm({@required this.auth});
   // final AuthBase auth;
 
   @override
-  _EmailSignInFormState createState() => _EmailSignInFormState();
+  _EmailSignInFormStatefulState createState() => _EmailSignInFormStatefulState();
 }
 
-class _EmailSignInFormState extends State<EmailSignInForm> {
+class _EmailSignInFormStatefulState extends State<EmailSignInFormStateful> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
 
   String get _email => _emailController.text;
-
   String get _password => _passwordController.text;
   EmailSignInFormType _formType = EmailSignInFormType.signIn;
   bool _submitted = false;
@@ -45,7 +45,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     super.dispose();
   }
 
-  void _submit() async {
+  Future<void> _submit() async {
     //print('submit called');
 
     setState(() {
@@ -56,7 +56,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     try {
       //simulating slow network
       //await Future.delayed(Duration(seconds: 3));
-      final auth = Provider.of<AuthBase>(context, listen: false);
+      final auth = Provider.of<AuthBase>(context);
       if (_formType == EmailSignInFormType.signIn) {
         await auth.signInWithEmailAndPassword(_email, _password);
         // await widget.auth.signInWithEmailAndPassword(_email, _password);

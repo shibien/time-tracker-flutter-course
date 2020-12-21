@@ -50,13 +50,14 @@ class LandingPage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.active) {
           User user = snapshot.data;
           if (user == null) {
-            return SignInPage(
+            return SignInPage.create(context);
+            //return SignInPage(
               // auth: widget.auth,
               //auth: auth,
               // same because onSignIn and _updateUser have the same signature
               //onSignIn: (user) => _updateUser(user),
               //onSignIn: _updateUser,
-            );
+            //);
           }
           return HomePage(
             // auth: widget.auth,
