@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:time_tracker_flutter_course/app/home_page.dart';
+import 'file:///D:/Documents_Alex/Projets/Flutter/Andrea-Flutter_Firebase_Build_a_Complete_App/MyCode/time_tracker_flutter_course/lib/app/home/jobs_page.dart';
 import 'package:time_tracker_flutter_course/app/sign-in/sign_in_page.dart';
 import 'package:time_tracker_flutter_course/services/auth.dart';
+import 'package:time_tracker_flutter_course/services/database.dart';
 
 //class LandingPage extends StatefulWidget {
 class LandingPage extends StatelessWidget {
@@ -44,25 +45,16 @@ class LandingPage extends StatelessWidget {
     final auth = Provider.of<AuthBase>(context, listen: false);
 
     return StreamBuilder<User>(
-      // stream: widget.auth.onAuthStateChanged,
       stream: auth.onAuthStateChanged,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           User user = snapshot.data;
           if (user == null) {
             return SignInPage.create(context);
-            //return SignInPage(
-              // auth: widget.auth,
-              //auth: auth,
-              // same because onSignIn and _updateUser have the same signature
-              //onSignIn: (user) => _updateUser(user),
-              //onSignIn: _updateUser,
-            //);
           }
-          return HomePage(
-            // auth: widget.auth,
-            //auth: auth,
-            //onSignOut: () => _updateUser(null),
+          return Provider<Database>(
+            create: (_) => FirestoreDatabase(uid: user.uid),
+            child: JobsPage(),
           );
         } else {
           return Scaffold(
