@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:time_tracker_flutter_course/app/home/models/job.dart';
 import 'package:time_tracker_flutter_course/services/firestore_service.dart';
+
 import 'api_path.dart';
 
 abstract class Database {
@@ -13,7 +13,7 @@ class FirestoreDatabase implements Database {
   FirestoreDatabase({@required this.uid}) : assert(uid != null);
   final String uid;
 
-  final _service = FirestoreService();
+  final _service = FirestoreService.instance;
 
   Future<void> createJob(Job job) async =>
       await _service.setData(
