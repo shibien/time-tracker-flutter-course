@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'file:///D:/Documents_Alex/Projets/Flutter/Andrea-Flutter_Firebase_Build_a_Complete_App/MyCode/time_tracker_flutter_course/lib/app/home/jobs_page.dart';
 import 'package:time_tracker_flutter_course/app/sign-in/sign_in_page.dart';
 import 'package:time_tracker_flutter_course/services/auth.dart';
 import 'package:time_tracker_flutter_course/services/database.dart';
+
+import 'home/jobs/jobs_page.dart';
 
 //class LandingPage extends StatefulWidget {
 class LandingPage extends StatelessWidget {
