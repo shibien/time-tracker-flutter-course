@@ -45,6 +45,9 @@ dependencies:
   #Cloud Firestore
   cloud_firestore: ^0.14.4
 
+  #Intl Package
+  intl: ^0.16.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
