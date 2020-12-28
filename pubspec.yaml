@@ -48,6 +48,9 @@ dependencies:
   #Intl Package
   intl: ^0.16.1
 
+  #RxDart package, see more on reactivex.io
+  rxdart: ^0.25.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
