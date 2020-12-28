@@ -40,7 +40,7 @@ class JobsPage extends StatelessWidget {
     }
   }
 
-  Future<void> _delete(BuildContext context, Job job) async{
+  Future<void> _delete(BuildContext context, Job job) async {
     try {
       final database = Provider.of<Database>(context, listen: false);
       await database.deleteJob(job);
@@ -56,7 +56,6 @@ class JobsPage extends StatelessWidget {
   //     final database = Provider.of<Database>(context, listen: false);
   //     await database.createJob(Job(name: 'Blogging', ratePerHour: 10));
   // }
-
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +79,10 @@ class JobsPage extends StatelessWidget {
       body: _buildContents(context),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => EditJobPage.show(context),
+        onPressed: () => EditJobPage.show(
+          context,
+          database: Provider.of<Database>(context, listen: false),
+        ),
         // onPressed: () => _createJob(context),
       ),
     );
@@ -125,5 +127,4 @@ class JobsPage extends StatelessWidget {
       },
     );
   }
-
 }

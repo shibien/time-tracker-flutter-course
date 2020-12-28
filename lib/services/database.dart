@@ -12,6 +12,8 @@ abstract class Database {
 
   Stream<List<Job>> jobsStream();
 
+  Stream<Job> jobStream({@required String jobId});
+
   Future<void> setEntry(Entry entry);
 
   Future<void> deleteEntry(Entry entry);
@@ -28,7 +30,8 @@ class FirestoreDatabase implements Database {
   final _service = FirestoreService.instance;
 
   @override
-  Future<void> setJob(Job job) async => await _service.setData(
+  Future<void> setJob(Job job) async =>
+      await _service.setData(
         path: APIPath.job(uid, job.id),
         data: job.toMap(),
       );
@@ -51,15 +54,23 @@ class FirestoreDatabase implements Database {
     await _service.deleteData(path: APIPath.job(uid, job.id));
   }
 
+  @override
+  Stream<Job> jobStream({@required String jobId}) =>
+      _service.documentStream(
+        path: APIPath.job(uid, jobId),
+        builder: (data, documentId) => Job.fromMap(data, documentId),
+      );
 
   @override
-  Stream<List<Job>> jobsStream() => _service.collectionStream(
+  Stream<List<Job>> jobsStream() =>
+      _service.collectionStream(
         path: APIPath.jobs(uid),
         builder: (data, documentId) => Job.fromMap(data, documentId),
       );
 
   @override
-  Future<void> setEntry(Entry entry) async => await _service.setData(
+  Future<void> setEntry(Entry entry) async =>
+      await _service.setData(
         path: APIPath.entry(uid, entry.id),
         data: entry.toMap(),
       );
